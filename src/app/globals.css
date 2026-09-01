@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────────────── */
+:root {
+  --bg: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --border: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --brand: #0066ff;
+  --brand-hover: #0052cc;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --sidebar-w: 224px;
+}
+
+.dark {
+  --bg: #0b0f19;
+  --bg-card: #111827;
+  --bg-sidebar: #0d1117;
+  --border: #1f2937;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --brand: #4f8fff;
+  --brand-hover: #6ea3ff;
+}
+
+/* ─── Base ───────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  margin: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ─── Utility Classes ────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.badge-success { background: #d1fae5; color: #065f46; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-danger  { background: #fee2e2; color: #991b1b; }
+.badge-info    { background: #dbeafe; color: #1e40af; }
+.badge-blocked { background: #fce7f3; color: #9d174d; }
+.badge-purple  { background: #ede9fe; color: #5b21b6; }
+
+.dark .badge-success { background: #064e3b; color: #6ee7b7; }
+.dark .badge-warning { background: #451a03; color: #fcd34d; }
+.dark .badge-danger  { background: #450a0a; color: #fca5a5; }
+.dark .badge-info    { background: #1e3a5f; color: #93c5fd; }
+.dark .badge-blocked { background: #500724; color: #fbcfe8; }
+.dark .badge-purple  { background: #2e1065; color: #c4b5fd; }
+
+.btn-primary {
+  background: var(--brand);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--brand-hover); }
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-ghost:hover { background: var(--bg); color: var(--text-primary); }
+
+/* ─── Sidebar ────────────────────────────────────────── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-logo .logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: -0.5px;
+}
+
+.sidebar-logo .logo-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.sidebar-nav { padding: 12px 8px; flex: 1; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+.nav-item:hover { background: var(--bg); color: var(--text-primary); }
+.nav-item.active {
+  background: #eff6ff;
+  color: var(--brand);
+  font-weight: 600;
+}
+.dark .nav-item.active { background: #1e3a5f33; }
+
+/* ─── Topbar ─────────────────────────────────────────── */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  height: 56px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 40;
+}
+
+/* ─── Main Content ───────────────────────────────────── */
+.main-content {
+  margin-left: var(--sidebar-w);
+  margin-top: 56px;
+  padding: 24px;
+  min-height: calc(100vh - 56px);
+}
+
+/* ─── KPI Cards ──────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+@media (max-width: 1280px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.kpi-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+.kpi-value { font-size: 24px; font-weight: 700; margin: 4px 0; letter-spacing: -0.5px; }
+.kpi-trend { font-size: 11px; display: flex; align-items: center; gap: 4px; }
+.kpi-up { color: var(--success); }
+.kpi-down { color: var(--danger); }
+
+/* ─── Table ──────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; color: var(--text-muted); border-bottom: 1px solid var(--border); background: var(--bg); text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg); }
+
+/* ─── Pipeline ───────────────────────────────────────── */
+.pipeline-stage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pipeline-stage:hover { border-color: var(--brand); }
+.pipeline-stage.active { border-color: var(--brand); background: #eff6ff; }
+.dark .pipeline-stage.active { background: #1e3a5f22; }
+.pipeline-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── Theme Toggle ───────────────────────────────────── */
+.theme-toggle {
+  width: 40px; height: 22px;
+  background: var(--border);
+  border-radius: 11px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+  outline: none;
+}
+.theme-toggle.on { background: var(--brand); }
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  background: white;
+  border-radius: 50%;
+  transition: left 0.2s;
+}
+.theme-toggle.on::after { left: 21px; }
+
+/* ─── Risk Score Bar ─────────────────────────────────── */
+.risk-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.risk-bar-fill { height: 100%; border-radius: 2px; }
+
+/* ─── Simulator Cards ────────────────────────────────── */
+.sim-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.sim-card:hover { border-color: var(--brand); transform: translateY(-1px); }
+.sim-card.recommended { border-color: var(--brand); }
+.sim-card .rec-tag {
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Animations ─────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.live-dot {
+  width: 8px; height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-in { animation: slide-in 0.25s ease; }
