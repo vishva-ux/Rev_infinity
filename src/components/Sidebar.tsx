@@ -40,11 +40,7 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-          <div className="live-dot" />
-          <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>All Systems Operational</span>
-        </div>
+      <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <Sun size={13} color="var(--text-muted)" />
           <button className={`theme-toggle ${dark ? 'on' : ''}`} onClick={toggle} title="Toggle theme" />
