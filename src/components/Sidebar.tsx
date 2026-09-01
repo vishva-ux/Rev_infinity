@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
+import { useEffect, useState } from 'react';
 import {
   LayoutDashboard, Globe, Radar, GitBranch, Zap,
   List, Users, BarChart2, FileText, Settings, Sun, Moon
@@ -23,6 +24,11 @@ const NAV = [
 export default function Sidebar() {
   const path = usePathname();
   const { dark, toggle } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="sidebar">
@@ -43,7 +49,7 @@ export default function Sidebar() {
       <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <Sun size={13} color="var(--text-muted)" />
-          <button className={`theme-toggle ${dark ? 'on' : ''}`} onClick={toggle} title="Toggle theme" />
+          <button className={`theme-toggle ${mounted && dark ? 'on' : ''}`} onClick={toggle} title="Toggle theme" />
           <Moon size={13} color="var(--text-muted)" />
         </div>
       </div>

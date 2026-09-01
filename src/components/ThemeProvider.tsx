@@ -7,10 +7,15 @@ const ThemeContext = createContext<{ dark: boolean; toggle: () => void }>({
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [dark, setDark] = useState(false);
+
   useEffect(() => {
     const saved = localStorage.getItem('rev-theme');
-    if (saved === 'dark') { setDark(true); document.documentElement.classList.add('dark'); }
+    if (saved === 'dark') {
+      setDark(true);
+      document.documentElement.classList.add('dark');
+    }
   }, []);
+
   const toggle = () => {
     setDark(d => {
       const next = !d;
@@ -19,7 +24,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       return next;
     });
   };
-  return <ThemeContext.Provider value={{ dark, toggle }}>{children}</ThemeContext.Provider>;
+
+  return (
+    <ThemeContext.Provider value={{ dark, toggle }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export const useTheme = () => useContext(ThemeContext);
