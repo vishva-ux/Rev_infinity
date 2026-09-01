@@ -58,10 +58,14 @@ const NODE_COLOR_MAP: Record<string, THREE.Color> = {
 
 export default function RevenueGlobe({
   nodes = SEEDED_REVENUE_NODES,
-  onNodeClick
+  onNodeClick,
+  zoomLevel = 1.0,
+  mode = '3D'
 }: {
   nodes?: RevenueNodeData[];
   onNodeClick?: (node: RevenueNodeData) => void;
+  zoomLevel?: number;
+  mode?: '2D' | '3D';
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredNode, setHoveredNode] = useState<RevenueNodeData | null>(null);
@@ -77,7 +81,8 @@ export default function RevenueGlobe({
     // 1. Scene, Camera, Renderer Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 5.2);
+    const targetZ = 5.2 / (zoomLevel || 1.0);
+    camera.position.set(0, 0, targetZ);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
@@ -340,9 +345,11 @@ export default function RevenueGlobe({
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Slow Y-axis rotation when not dragging
-      if (!isMouseDown) {
+      // Rotation based on mode
+      if (mode === '3D' && !isMouseDown) {
         globeGroup.rotation.y += 0.0015; // ~0.04 rad/sec
+      } else if (mode === '2D') {
+        globeGroup.rotation.set(0, 0, 0);
       }
 
       // Animate arc pulses
@@ -391,7 +398,7 @@ export default function RevenueGlobe({
         renderer.dispose();
       } catch (e) {}
     };
-  }, [nodes, onNodeClick]);
+  }, [nodes, onNodeClick, zoomLevel, mode]);
 
   return (
     <div ref={containerRef} style={{ width: '100%', height: 320, position: 'relative', overflow: 'hidden' }}>

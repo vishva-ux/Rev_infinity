@@ -104,6 +104,9 @@ export default function CommandCenter() {
     }
   };
 
+  const [globeZoom, setGlobeZoom] = useState(1.0);
+  const [globeMode, setGlobeMode] = useState<'2D' | '3D'>('3D');
+
   const S = summary;
 
   return (
@@ -166,7 +169,7 @@ export default function CommandCenter() {
           {/* Globe Center */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
             <div style={{ position: 'relative', width: 320, height: 320, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <RevenueGlobe />
+              <RevenueGlobe zoomLevel={globeZoom} mode={globeMode} />
 
               {/* Floating Overlay Metric 1: Top Right */}
               <div style={{ position: 'absolute', top: 15, right: -15, background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
@@ -196,12 +199,14 @@ export default function CommandCenter() {
               </div>
 
               {/* Bottom Controls Pill */}
-              <div style={{ position: 'absolute', bottom: -10, display: 'flex', gap: 8, alignItems: 'center' }}>
-                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 16, padding: '2px 8px', fontSize: 11, color: 'var(--text-muted)', display: 'flex', gap: 6, cursor: 'pointer' }}>
-                  <span>-</span> <span>+</span>
+              <div style={{ position: 'absolute', bottom: -10, display: 'flex', gap: 8, alignItems: 'center', zIndex: 10 }}>
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 16, padding: '3px 10px', fontSize: 12, color: 'var(--text-primary)', display: 'flex', gap: 10, cursor: 'pointer', userSelect: 'none' }}>
+                  <span onClick={() => setGlobeZoom(z => Math.max(0.6, z - 0.2))} style={{ padding: '0 4px', cursor: 'pointer', fontWeight: 700 }} title="Zoom Out">-</span>
+                  <span onClick={() => setGlobeZoom(z => Math.min(1.8, z + 0.2))} style={{ padding: '0 4px', cursor: 'pointer', fontWeight: 700 }} title="Zoom In">+</span>
                 </div>
-                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 16, padding: '2px 10px', fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', display: 'flex', gap: 8, cursor: 'pointer' }}>
-                  <span>2D</span> <span style={{ color: 'var(--brand)' }}>3D</span>
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 16, padding: '3px 12px', fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', display: 'flex', gap: 10, cursor: 'pointer', userSelect: 'none' }}>
+                  <span onClick={() => setGlobeMode('2D')} style={{ color: globeMode === '2D' ? 'var(--brand)' : 'var(--text-muted)', cursor: 'pointer' }}>2D</span>
+                  <span onClick={() => setGlobeMode('3D')} style={{ color: globeMode === '3D' ? 'var(--brand)' : 'var(--text-muted)', cursor: 'pointer' }}>3D</span>
                 </div>
               </div>
             </div>
